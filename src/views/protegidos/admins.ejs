@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Administradores</h1>
+    <table>
+       <tr>
+           <td>Nombre:</td>
+           <td>email:</td>
+           <td>Password:</td>
+           <td>Modificar</td>
+           <td>Eliminar</td>
+       </tr>
+       <% admins.forEach((admin)=>{ %>
+           <tr>
+               <td><%= admin.name %></td>
+               <td><%= admin.email %></td>
+               <td><%= admin.password %></td>
+               <td><a id='btn-update' href="/users/updatea/<%= admin.id %>">Modificar</a></td>
+               <td><a id='btn-delete' href="/users/deletea/<%= admin.id %>">Eliminar</a></td>
+           </tr>
+       <% })  %>
+    </table>
+    <div id="div10" >
+        <a href="/users/pregunta" >menu principal</a>
+    </div>
+</body>
+</html>

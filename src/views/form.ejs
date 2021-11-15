@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Rada</title>
+	<link type="text/css" href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link type="text/css" href="/css/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link type="text/css" href="/css/css/theme.css" rel="stylesheet">
+	<link type="text/css" href="/css/images/icons/css/font-awesome.css" rel="stylesheet">
+	<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+					<i class="icon-reorder shaded"></i></a><a class="brand" href="/users/menu">RADA-RECORDS </a>
+				<div class="nav-collapse collapse navbar-inverse-collapse">
+					<ul class="nav nav-icons">
+						<li><a href="#" onclick="mostrar()"><i class="icon-eye-open"></i></a></li>
+					</ul>
+					<form class="navbar-search pull-left input-append" action="#">
+					<input type="text" class="span3">
+					<button class="btn" type="button">
+						<i class="icon-search"></i>
+					</button>
+					</form>
+					<ul class="nav pull-right">
+						<li><a href="/users/contact">Soporte </a></li>
+						<li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img src="/css/images/user.png" class="nav-avatar" />
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Perfil</a></li>
+								<li class="divider"></li>
+								<li><a href="/">Cerrar sesion</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!-- /.nav-collapse -->
+			</div>
+		</div>
+		<!-- /navbar-inner -->
+	</div>
+	<!-- /navbar -->
+
+
+	<div class="wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="span3">
+					<div class="sidebar">
+						<ul class="widget widget-menu unstyled">
+							<li class="active"><a href="/users/menu"><i class="menu-icon icon-dashboard"></i>Menu principal
+							</a></li>
+							<li><a href="/users/tablero"><i class="menu-icon icon-bullhorn"></i>Anotaciones </a>
+							</li>
+							<li><a href="/users/message"><i class="menu-icon icon-inbox"></i>Mensajes <b class="label green pull-right">
+								11</b> </a></li>
+							<li><a href="/users/tarea"><i class="menu-icon icon-tasks"></i>Tareas <b class="label orange pull-right">
+								19</b> </a></li>
+						</ul>
+						<!--/.widget-nav-->
+						
+						
+						<ul class="widget widget-menu unstyled">
+							<li><a href="/users/store"><i class="menu-icon icon-book"></i>Biblioteca </a></li>
+							<li><a href="/users/form"><i class="menu-icon icon-paste"></i>Forms </a></li>
+							<li><a href="/users/tabla"><i class="menu-icon icon-table"></i>Regitros</a></li>
+							<li><a href="/users/graph"><i class="menu-icon icon-bar-chart"></i>Graficos </a></li>
+						</ul>
+						<!--/.widget-nav-->
+						<ul class="widget widget-menu unstyled">
+							<li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cog">
+							</i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+							</i>Más páginas </a>
+								<ul id="togglePages" class="collapse unstyled">
+									<li><a href="/users/perfil"><i class="icon-inbox"></i>Perfil </a></li>
+									<li><a href="/users/artistas"><i class="icon-inbox"></i>Usuarios </a></li>
+								</ul>
+							</li>
+							<li><a href="/"><i class="menu-icon icon-signout"></i>Cerrar sesion </a></li>
+						</ul>
+					</div><!--/.sidebar-->
+				</div><!--/.span3-->
+
+
+				<div class="span9">
+					<div class="content">
+
+						<div class="module">
+							<div class="module-head">
+								<h3>Registro de artistas</h3>
+							</div>
+							<div class="module-body">
+
+									<div class="alert" style="display: none">
+										<button type="button" class="close" data-dismiss="alert">×</button>
+										<strong>Warning!</strong> Something fishy here!
+									</div>
+									<div class="alert alert-error" style="display: none">
+										<button type="button" class="close" data-dismiss="alert">×</button>
+										<strong>Oh snap!</strong> Whats wrong with you? 
+									</div>
+									<div class="alert alert-success" id="artist-r" style="display: none">
+										<button type="button" class="close" data-dismiss="alert">×</button>
+										<strong>Well done!</strong> Now you are listening me :) 
+									</div>
+
+									<br />
+
+									<form class="form-horizontal row-fluid" name="myform" action="/users/createartist"  method="POST">
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Nombre de grupo</label>
+											<div class="controls">
+												<input type="text" name="grupo" id="grupo" placeholder="Escribe el nombre del grupo completo." class="span8">
+												<span class="help-inline"></span>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Correo</label>
+											<div class="controls">
+												<input type="text" id="correo" name="correo" placeholder="Escribe un email de contacto." class="span8">
+												<span class="help-inline"></span>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Numero</label>
+											<div class="controls">
+												<input type="text" id="numero" name="numero" placeholder="Escribe un numero para contacto." class="span8">
+												<span class="help-inline"></span>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">ID de artista</label>
+											<div class="controls">
+												<input type="text" id="ide" name="ide" placeholder="Coloca el ID sin espacios." class="span8">
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Fecha de inicio</label>
+											<div class="controls">
+												<input data-title="A tooltip for the input" id="fecha" name="fecha" type="text" placeholder="Coloca cuando se formo la banda" data-original-title="ok" class="span8 tip">
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Numero de integrantes</label>
+											<div class="controls">
+												<div class="input-prepend">
+													<span class="add-on">#</span><input class="span8" type="text" placeholder="0" id="num-int"> <span class="add-on" onclick="habilitar()">+</span>
+													<label>
+														<input type="text" id="name1" name="name1" placeholder="Nombre completo." class="span8" style="display: none">
+													</label>
+													<label>
+														<input type="text" id="name2" name="name2" placeholder="Nombre completo." class="span8" style="display: none">
+													</label>
+													<label>
+														<input type="text" id="name3" name="name3" placeholder="Nombre completo." class="span8" style="display: none">
+													</label>
+													<label>
+														<input type="text" id="name4" name="name4" placeholder="Nombre completo." class="span8" style="display: none">
+													</label>
+													<label>
+														<input type="text" id="name5" name="name5" placeholder="Nombre completo." class="span8" style="display: none">
+													</label>
+													
+													
+
+												</div>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Ingreso mensual</label>
+											<div class="controls">
+												<div class="input-append">
+													<input type="text" id="ingreso" name="ingreso" placeholder="5.000 mx" class="span8"><span class="add-on">$</span>
+												</div>
+											</div>
+										</div>
+
+										
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Locación</label>
+											<div class="controls">
+												<select tabindex="1" id="locacion" name="locacion"  data-placeholder="Selecciona una locación.." class="span8">
+													<option value="">Selecciona una locación..</option>
+													<option value="CDMX, Ciudad de México">CDMX, Ciudad de México</option>
+													<option value="Monterrey">Monterrey</option>
+													<option value="Queretaro">Queretaro</option>
+													<option value="Guadalajara">Guadalajara</option>
+													<option value="Merida">Merida Yucatan</option>
+													<option value="Tampico">Tampico</option>
+													<option value="Puebla">Puebla</option>
+													<option value="Otro">Otro</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label">Modo de produccion</label>
+											<div class="controls">
+												<label class="radio">
+													<input type="radio" name="optionsRadios" id="optionsRadios1" value="Album" checked="">
+													Album
+												</label> 
+												<label class="radio">
+													<input type="radio" name="optionsRadios" id="optionsRadios2" value="Sencillo">
+													Sencillo
+												</label> 
+												<label class="radio">
+													<input type="radio" name="optionsRadios" id="optionsRadios3" value="Ambos">
+													Ambos
+												</label>
+											</div>
+										</div>
+
+				
+
+										<div class="control-group">
+											<label class="control-label">Plataformas registrado</label>
+											<div class="controls">
+												<label class="checkbox">
+													<input  type="checkbox" value="Spotify" name="chbx1">
+													Spotify
+												</label>
+												<label class="checkbox">
+													<input type="checkbox" value="Youtube" name="chbx2">
+													Youtube
+												</label>
+												<label class="checkbox">
+													<input type="checkbox" value="Itunes" name="chbx3">
+													Itunes
+												</label>
+												<label class="checkbox">
+													<input type="checkbox" value="Deezer" name="chbx4">
+													Deezer
+												</label>
+											</div>
+										</div>
+										<div class="control-group">
+											<div class="controls">
+												<button type="submit" class="btn">Submit Form</button>
+											</div>
+										</div>
+									</form>
+							</div>
+						</div>
+
+						
+						
+					</div><!--/.content-->
+				</div><!--/.span9-->
+			</div>
+		</div><!--/.container-->
+	</div><!--/.wrapper-->
+
+	<div class="footer">
+		<div class="container">
+			 
+
+			<b class="copyright">&copy; 2021 ESIME ZACATENCO </b> ICE.
+		</div>
+	</div>
+
+	<script src="/css/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="/css/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+	<script src="/css/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/css/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+	<script src="/socket.io/socket.io.js"></script>
+        <script src="/js/index.js"></script>
+</body>

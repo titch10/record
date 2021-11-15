@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    
+</head>
+<body id="bd">
+    
+    <div class="content">
+        
+        <center>
+            <form action="/users/create" method="POST">
+                <label for="name">Nombre</label>
+                <input type="text" name="name" id="name">
+                <label for="lugar">locacion</label>
+                <input type="text" name="lugar" id="lugar"> 
+                <label for="number">numero</label>
+                <input type="number" name="number" id="number"> 
+                <input type="submit" value="Registrar">
+              </form>
+        </center>
+       
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/index.js"></script>
+</body>
+</html>

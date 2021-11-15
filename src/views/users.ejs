@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>todos los usuarios</h1>
+    <table>
+       <tr>
+           <td>Nombre:</td>
+           <td>locacion:</td>
+           <td>numero:</td>
+           <td>Modificar</td>
+           <td>Eliminar</td>
+       </tr>
+       <% users.forEach((user)=>{ %>
+           <tr>
+               <td><%= user.name %></td>
+               <td><%= user.lugar %></td>
+               <td><%= user.numero %></td>
+               <td><a id='btn-update' href="/users/update/<%= user.id %>">Modificar</a></td>
+               <td><a id='btn-delete' href="/users/delete/<%= user.id %>">Eliminar</a></td>
+           </tr>
+       <% })  %>
+    </table>
+    <div id="div10" >
+        <a href="/users/pregunta" >menu principal</a>
+    </div>
+</body>
+</html>
