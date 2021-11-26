@@ -27,6 +27,7 @@ router.get('/store',userController.getStore)
 
 //Rutas de Rada
 router.get('/menu',userController.getIndex)
+router.get('/count',userController.getCount)
 router.get('/tablero',userController.getTablero)
 router.post('/login', userController.login)
 router.get('/contact',userController.getContact)

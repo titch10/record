@@ -9,6 +9,7 @@ const nodemailer=require('nodemailer')
 const {google} = require('googleapis')
 var contador =0
 var bandera=0
+var aqui;
 const cloudinary = require('cloudinary')
 const fs=require('fs-extra')
 cloudinary.config({
@@ -19,29 +20,39 @@ cloudinary.config({
 
 
 
-
-
-
-
 //funciones variadas
-function mostrardos(){
-
-    if((contador+1) > 3) {
-     
-	} else {
-		contador++
-	}
-
+/*function contarUsers(){
     var parrafo = document.getElementById("parrafo");
-   
-    var textod = texto[contador]
-    
-    parrafo.innerHTML = textod
+    User.countDocuments({}, function (err, count) {
+        console.log('there are %d jungle adventures', count);
+        
+      });
+      parrafo.innerHTML=count;
+      await User.find({}).then((err,result)=>{
+            res.status(200).json({count: result.length()})
+            console.log('prueba')
+        })
  }
 
-
+*/
 
 //funciones para users 
+
+const getCount = async(req, res)=>{
+    
+    try{  
+        await User.countDocuments({}, function (err, count) {
+            console.log('there are %d jungle adventures', count);
+            //res.status(200).json(count)
+            res.send(count);
+          });
+    }catch(e){
+        console.log(e)
+        res.send(e);
+    }
+};
+
+
 const login = (req, res)=>{
     Admin.findOne({email:req.body.email} ,(err, result)=>{
         if (err) {
@@ -293,7 +304,7 @@ const sendSupport =(req,res)=>{
     const CLIENTD_ID="330807305382-nnrslo8a2ra07ocrob6jhoj8d0iivvg5.apps.googleusercontent.com";
     const CLIENTD_SECRET="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";
     const REDIRECT_URI="https://developers.google.com/oauthplayground";
-    const REFRESH_TOKEN="1//04Z4T4MNyffHZCgYIARAAGAQSNwF-L9IrhcYAgdebdJucuLwdXNHVuAHpuavGKZfKiqdQBAUr5ZUuocADS4BaJkvINpGmq-7aqOA";
+    const REFRESH_TOKEN="1//04vwpitvPoaZXCgYIARAAGAQSNwF-L9IripmKWUU5oQREkdfzdmwDHerDjoms-lXwGOiqXQNB_w37P-p5f0d6XPj4NUJyA8hrSHc";
     
     const oAuth2Client= new google.auth.OAuth2(
         CLIENTD_ID,
@@ -331,7 +342,7 @@ const sendSupport =(req,res)=>{
          }
     }
         sendMail()
-        .then(result=>res.status(200).send('enviado'))
+        .then(result=>res.status(200).redirect('/users/menu'))
         .catch(err=>console.log(error.message));
 }
 
@@ -383,7 +394,7 @@ const subirImagen= async(req,res)=>{
     res.send('ok');
 }
 
-module.exports= {subirImagen,createArtist,getPerfil,getArtistas,getGraph,getTabla,getForm,getTarea,getMessage,getTablero,getContact,getIndex, mostrardos,getStore, getBye,getUser,getPregunta, 
+module.exports= {getCount,subirImagen,createArtist,getPerfil,getArtistas,getGraph,getTabla,getForm,getTarea,getMessage,getTablero,getContact,getIndex,getStore, getBye,getUser,getPregunta, 
     getCreateUser, getUpdateUser,getUpdateAdmin, getDeleteUser, getDeleteAdmin, 
     createUser, updateUser, updateAdmin, deleteUser, deleteAdmin, getAdmin, login, register, 
     getcreateAdmin, sendSupport}
