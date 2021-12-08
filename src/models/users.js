@@ -11,13 +11,15 @@ const UserSchema = new Schema ({
     name3: String,
     name4: String,
     name5: String,
-    ingreso:String,
+    
     locacion: String,
     modo: String,
     spotify:String,
     youtube:String,
     itunes:String,
     deezer:String,
+
+    
 })
 
 const User = mongoose.model('User',UserSchema)

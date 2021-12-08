@@ -5,7 +5,7 @@ const Photo = new Schema({
     descripcion:String,
     imageURL: String,
     public_id:String,
-    created_at: {type: Date, default: Date.now()}
+    path:{type:String}
 })
 
 module.exports = model('Photo',Photo)

@@ -28,7 +28,16 @@ function habilitar() {
      }
    
 }
-
+function habilitarEliminar() {
+    var boton = document.getElementById("boton1");
+       if(boton.disabled==true)
+       {
+        boton.disabled = false;   
+       }else{
+           boton.disabled= true;
+       }
+  
+}
 function mostrar() {
     if (aux) {
         document.getElementById('cambio').style.background = "#333"

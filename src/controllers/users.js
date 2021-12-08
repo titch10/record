@@ -1,15 +1,18 @@
 //const connection = require ('../connection')
-
 const User = require('../models/users')
 const Admin = require('../models/admin')
 const Photo = require('../models/Photo')
+const Msg = require('../models/msg')
+const Task = require('../models/task')
 const jwk = require ('jsonwebtoken')
 const bcrypt = require ('bcrypt')
 const nodemailer=require('nodemailer')
 const {google} = require('googleapis')
-var contador =0
-var bandera=0
-var aqui;
+const path=require('path')
+let msn = false;
+let tsk = false;
+var Growth;
+var metaArtist=35;
 const cloudinary = require('cloudinary')
 const fs=require('fs-extra')
 cloudinary.config({
@@ -18,64 +21,7 @@ cloudinary.config({
     api_secret:'rxbr2AMHktBGNgyOUpgylsdVCaM'
 });
 
-
-
-//funciones variadas
-/*function contarUsers(){
-    var parrafo = document.getElementById("parrafo");
-    User.countDocuments({}, function (err, count) {
-        console.log('there are %d jungle adventures', count);
-        
-      });
-      parrafo.innerHTML=count;
-      await User.find({}).then((err,result)=>{
-            res.status(200).json({count: result.length()})
-            console.log('prueba')
-        })
- }
-
-*/
-
-//funciones para users 
-
-const getCount = async(req, res)=>{
-    
-    try{  
-        await User.countDocuments({}, function (err, count) {
-            console.log('there are %d jungle adventures', count);
-            //res.status(200).json(count)
-            res.send(count);
-          });
-    }catch(e){
-        console.log(e)
-        res.send(e);
-    }
-};
-
-
-const login = (req, res)=>{
-    Admin.findOne({email:req.body.email} ,(err, result)=>{
-        if (err) {
-            console.log('ha ocurrido un error'+err)
-        }else{
-            if(result){
-               if(bcrypt.compareSync(req.body.password, result.password)){
-                          //console.log('Contraseña correcta')
-                          //jwk.sign({Admin:result},'secret-key',(err,token)=>{
-                            res.redirect('/users/menu')
-                   }
-                   
-                   else{
-                          
-                          res.redirect('/')
-                          console.log('Contraseña incorrecta')
-                   }
-            }else{
-                console.log('Usuario no encontrado')
-            }
-        }
- })
-}
+//GET USER
 const getUser=(req,res)=>{
     //const sql ='select * from users'
     User.find({}, (err, result)=>{
@@ -87,24 +33,8 @@ const getUser=(req,res)=>{
           }
     })
 }
-const getIndex=(req,res)=>{
-    res.render('index')
-}
-const getTablero=async (req,res)=>{
-    const photos = await Photo.find();
-    res.render('activity',{photos});
-}
 const getCreateUser=(req,res)=>{
-        res.render('create-user')
-}
-const getPregunta=(req,res)=>{
-    res.render('pregunta')
-}
-const getStore=(req,res)=>{
-    res.render('tienda')
-}
-const getBye=(req,res)=>{
-    res.render('despedida')
+    res.render('create-user')
 }
 const getUpdateUser=(req,res)=>{
     const param = req.params.id
@@ -178,9 +108,7 @@ const deleteUser = (req,res)=>{
     })
 }
 
-
-
-//Funciones para Admin Rutas
+//GET ADMIN
 
 const getAdmin = (req, res)=>{
     Admin.find({}, (err, result)=>{
@@ -228,7 +156,7 @@ const getUpdateAdmin=(req,res)=>{
 const getDeleteAdmin=(req,res)=>{
     const param = req.params.ide
     //const sql= 'select * from users where id=?'
-    Admin.find({_ide:param},(err, result)=>{
+    Admin.find({_id:param},(err, result)=>{
            if (err) {
                console.log('ha ocurrido un error'+err)
            }else{
@@ -264,29 +192,118 @@ const deleteAdmin = (req,res)=>{
         }
     })
 }
-const getContact =(req,res)=>{
-    res.render('cont-us')
+
+
+//GET
+const getTablero=async (req,res)=>{
+    const photos = await Photo.find();
+    res.render('activity',{photos,msn});
 }
-const getMessage=(req,res)=>{
-    res.render('message')
+const getStore=(req,res)=>{
+    res.render('tienda',{msn})
+}
+const getContact =(req,res)=>{
+    res.render('cont-us',{msn})
+}
+const getMessage= async(req,res)=>{
+    msn = false;
+    var aux=1;
+    Msg.find({}, async (err, result)=>{
+    if (err) {
+        console.log('ha ocurrido un error')
+    }else{
+        console.log(result)
+        await Msg.countDocuments({},function(err,count){
+        res.render('message',{msgs:result,count,aux,msn})
+    })
+    }
+})
+
 }
 const getTarea=(req,res)=>{
-    res.render('task')
+    var aux=1;
+    Task.find({}, async (err, result)=>{
+    if (err) {
+        console.log('ha ocurrido un error')
+    }else{
+        console.log(result)
+        await Task.countDocuments({},function(err,count){
+           res.render('task',{tasks:result,count,aux,msn})
+        })
+    }
+    })
+}
+const getCreateTask=(req,res)=>{
+    res.render('task_create',{msn})
 }
 const getForm=(req,res)=>{
-    res.render('form')
+    res.render('form',{msn})
 }
 const getTabla=(req,res)=>{
-    res.render('table')
+    res.render('table',{msn})
 }
 const getGraph=(req,res)=>{
-    res.render('charts')
+    res.render('charts',{msn})
 }
 const getArtistas=(req,res)=>{
-    res.render('other-user-profile')
+    res.render('other-user-profile',{msn})
 }
 const getPerfil=(req,res)=>{
-    res.render('other-user-listing')
+    res.render('other-user-listing',{msn})
+}
+const getIndex=async(req,res)=>{
+    try{  
+        await User.countDocuments({}, function (err, count) {
+            //console.log('there are %d users', count);
+            Growth= (count*100)/metaArtist;
+            Growth=Growth.toFixed(2);
+            res.render('index',{count,Growth,msn})
+          });
+    }catch(e){
+        console.log(e)
+    }
+}
+const getUpdateTask=async(req,res)=>{
+    const {id} = req.params;
+    const task = await Task.findById(id);
+    res.render('task-edit',{task,msn});
+}
+
+// FUNCIONES
+const getCount = async(req, res)=>{
+    
+    try{  
+        await User.countDocuments({}, function (err, count) {
+            console.log('there are %d jungle adventures', count);
+            res.render()
+          });
+    }catch(e){
+        console.log(e)
+        res.send(e);
+    }
+}
+const login = (req, res)=>{
+    Admin.findOne({email:req.body.email} ,(err, result)=>{
+        if (err) {
+            console.log('ha ocurrido un error'+err)
+        }else{
+            if(result){
+               if(bcrypt.compareSync(req.body.password, result.password)){
+                          //console.log('Contraseña correcta')
+                          //jwk.sign({Admin:result},'secret-key',(err,token)=>{
+                            res.redirect('/users/menu')
+                   }
+                   
+                   else{
+                          
+                          res.redirect('/')
+                          console.log('Contraseña incorrecta')
+                   }
+            }else{
+                console.log('Usuario no encontrado')
+            }
+        }
+ })
 }
 const sendSupport =(req,res)=>{
     const {fullname, email, phone, affair, message} =req.body;
@@ -345,8 +362,7 @@ const sendSupport =(req,res)=>{
         .then(result=>res.status(200).redirect('/users/menu'))
         .catch(err=>console.log(error.message));
 }
-
-const createArtist = (req,res)=>{
+const createArtist = async(req,res)=>{
     //const sql='insert into users SET ?'
     const data= req.body
     const user = new User({
@@ -360,7 +376,6 @@ const createArtist = (req,res)=>{
         name3: data.name3,
         name4: data.name4,
         name5: data.name5,
-        ingreso:data.ingreso,
         locacion:data.locacion,
         modo:data.optionsRadios,
         spotify:data.chbx1,
@@ -369,17 +384,9 @@ const createArtist = (req,res)=>{
         deezer:data.chbx4,
     })
 
-    user.save((err, result)=>{
-            if (err) {
-                console.log(err)
-            }else{
-                console.log('Usuario registrado')
-                res.redirect('/users/form')
-            }
-    })
-    //res.render('users',{users:users})
+    await user.save();
+    res.redirect('/users/form')
 }
-
 const subirImagen= async(req,res)=>{
     const {title,descripcion}=req.body;
     const result = await cloudinary.v2.uploader.upload(req.file.path)
@@ -393,8 +400,79 @@ const subirImagen= async(req,res)=>{
     await fs.unlink(req.file.path)
     res.send('ok');
 }
+const getSendmsg=async(req,res)=>{
+    try{
+        var fechahora=new Date()
+        console.log(fechahora.getDate())
+        res.render('sendmsg')    
+    }catch(e){
 
-module.exports= {getCount,subirImagen,createArtist,getPerfil,getArtistas,getGraph,getTabla,getForm,getTarea,getMessage,getTablero,getContact,getIndex,getStore, getBye,getUser,getPregunta, 
+    }
+
+}
+const msgEnvio = (req,res)=>{
+    //const sql='insert into users SET ?'
+    msn=true
+    var fechahora=new Date()
+    const data= req.body
+    const msg = new Msg({
+        title: data.title,
+        descripcion: data.descripcion,
+        time: fechahora.getDay()+"/"+ fechahora.getMonth()+" - "+fechahora.getHours()+":"+fechahora.getMinutes()
+    })
+
+    msg.save((err, result)=>{
+            if (err) {
+                console.log(err)
+            }else{
+                console.log('Mensaje enviado')
+                res.redirect('/')
+            }
+    })
+    //res.render('users',{users:users})
+}
+const deleteMsg = async (req,res)=>{
+    const {id}=req.params
+    await Msg.remove({_id:id})
+    res.redirect('/users/message')
+}
+const crearTask=(req,res)=>{
+    tsk=true
+    var fechahora=new Date()
+    const data= req.body
+    const task = new Task({
+        tarea: data.tarea,
+        time: fechahora.getDate()+"/"+ fechahora.getMonth() +" - "+fechahora.getHours()+":"+fechahora.getMinutes()
+    })
+
+    task.save((err, result)=>{
+            if (err) {
+                console.log(err)
+            }else{
+                console.log('Mensaje enviado')
+                res.redirect('/users/tarea')
+            }
+    })
+}
+const deleteTask = async (req,res)=>{
+    const {id}=req.params
+    await Task.remove({_id:id})
+    res.redirect('/users/tarea')
+}
+const cambiarBoton = async (req,res)=>{
+    const {id}=req.params
+    const task = await Task.findById(id);
+    task.status =!task.status
+    await task.save();
+    res.redirect('/users/tarea')
+} 
+const updateTask= async(req,res)=>{
+   const {id}=req.params;
+   await Task.update({_id:id},req.body);
+   res.redirect('/users/tarea')
+}  
+
+module.exports= {updateTask,getUpdateTask,cambiarBoton,deleteTask,crearTask,getCreateTask,deleteMsg,msgEnvio,getSendmsg,getCount,subirImagen,createArtist,getPerfil,getArtistas,getGraph,getTabla,getForm,getTarea,getMessage,getTablero,getContact,getIndex,getStore,getUser, 
     getCreateUser, getUpdateUser,getUpdateAdmin, getDeleteUser, getDeleteAdmin, 
     createUser, updateUser, updateAdmin, deleteUser, deleteAdmin, getAdmin, login, register, 
     getcreateAdmin, sendSupport}

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,49 +30,48 @@
 								<div class="pull-left">
 									Filter : &nbsp;
 									<div class="btn-group">
-										<button class="btn">Todas</button>
+										<button class="btn">Nueva tarea</button>
 										<button class="btn dropdown-toggle" data-toggle="dropdown">
 											<span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li><a href="#">Todas</a></li>
+											<li><a href="/users/tarea">Todas</a></li>
+											<li><a href="#">En progreso</a></li>
+											<li><a href="#">Done</a></li>
 											<li class="divider"></li>
-											<li><a href="/users/crearTarea">Nueva tarea</a></li>
+											<li><a href="#">Nueva tarea</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
-							<div class="module-body table">								
-
-								<table class="table table-message">
-									
-									<tbody>
-										<tr class="heading">
-											<td class="cell-icon">N°</td>
-											<td class="cell-title">Pendientes</td>
-											<td class="cell-status hidden-phone hidden-tablet">Estatus</td>
-											<td class="cell-status hidden-phone hidden-tablet">Editar</td>
-											<td class="cell-time align-right">Fecha</td>
-										</tr>
-										<% for (var i=0; i < tasks.length; i++){ %>
-										<tr class="task">
-											<td class="cell-icon"><i class="icon-checker">i</i></td>
-											<td class="cell-title"><%= tasks[i].tarea %></td>
-											<td class="cell-status hidden-phone hidden-tablet">
-												<a href="/users/turn/<%= tasks[i]._id %>" class="btn <%= tasks[i].status ? 'btn-success' : 'btn-danger' %>"></a>
-											</td>
-											<td class="cell-status hidden-phone hidden-tablet">
-												<a href="/users/updateTask/<%= tasks[i]._id %>" class="btn btn-info">E</a>
-												<a href="/users/eliminarTarea/<%= tasks[i]._id %>" class="btn btn-danger">B</a>
-											</td>
-											<td class="cell-time align-right"><%= tasks[i].time %></td>
-										</tr>
-									    <% } %>
-									</tbody>
-								</table>
+							
+                            
 
 
-							</div>
+
+
+                            <div class="module-body">
+
+                                <form class="form-horizontal row-fluid" name="myform" action="/users/updateTask/<%= task._id %>"  method="POST">
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <textarea name="tarea" class="span8" style="height: 90px; resize: none;"><%= task.tarea %></textarea>
+                                            <span class="help-inline"></span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <button type="submit" class="btn-primary">Modificar tarea</button>
+                                        </div>
+                                    </div>
+                                </form>
+                             </div>
+
+
+
+
+
+
 							<div class="module-foot">
 							</div>
 						</div>
