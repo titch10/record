@@ -18,7 +18,10 @@ const UserSchema = new Schema ({
     youtube:String,
     itunes:String,
     deezer:String,
-
+    
+    imageURL: String,
+    public_id:String,
+    path:{type:String}
     
 })
 

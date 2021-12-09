@@ -56,7 +56,7 @@
 										</tr>
 										<% for (var i=0; i < tasks.length; i++){ %>
 										<tr class="task">
-											<td class="cell-icon"><i class="icon-checker">i</i></td>
+											<td class="cell-icon"><i class="icon-checker"><%= i+1 %></i></td>
 											<td class="cell-title"><%= tasks[i].tarea %></td>
 											<td class="cell-status hidden-phone hidden-tablet">
 												<a href="/users/turn/<%= tasks[i]._id %>" class="btn <%= tasks[i].status ? 'btn-success' : 'btn-danger' %>"></a>

@@ -44,7 +44,7 @@
 
 									<br />
 
-									<form class="form-horizontal row-fluid" name="myform" action="/users/createartist"  method="POST">
+									<form class="form-horizontal row-fluid" name="myform" action="/users/createartist"  method="POST" enctype="multipart/form-data">
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Nombre de grupo</label>
 											<div class="controls">
@@ -169,9 +169,16 @@
 												</label>
 											</div>
 										</div>
-										
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Imagen de Artista</label>
+											<div class="controls">
+												<input value="" type="file" id="holi" name="image"
+											    rel="tooltip" data-placement="top" data-original-title="Upload a photo" style="opacity: 0;">
+											    <label for="holi"><i class="icon-camera shaded"></i></label>
+											</div>
+										</div>
 										<div class="clearfix">
-											<input value="Publicar nota" type="submit" href="#" class="btn btn-primary pull-right">	
+											<input value="Registrar artista" type="submit" href="#" class="btn btn-primary pull-right">	
 										    
 										</div>
 									</form>

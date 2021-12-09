@@ -226,7 +226,7 @@ const getTarea=(req,res)=>{
     if (err) {
         console.log('ha ocurrido un error')
     }else{
-        console.log(result)
+        
         await Task.countDocuments({},function(err,count){
            res.render('task',{tasks:result,count,aux,msn})
         })
@@ -365,6 +365,7 @@ const sendSupport =(req,res)=>{
 const createArtist = async(req,res)=>{
     //const sql='insert into users SET ?'
     const data= req.body
+    const result = await cloudinary.v2.uploader.upload(req.file.path)
     const user = new User({
         grupo: data.grupo,
         correo: data.correo,
@@ -382,9 +383,13 @@ const createArtist = async(req,res)=>{
         youtube:data.chbx2,
         itunes:data.chbx3,
         deezer:data.chbx4,
+
+        imageURL: result.url,
+        public_id: result.public_id
     })
 
     await user.save();
+    await fs.unlink(req.file.path)
     res.redirect('/users/form')
 }
 const subirImagen= async(req,res)=>{
