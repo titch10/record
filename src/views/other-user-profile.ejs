@@ -16,7 +16,90 @@
                     <%- include("partials/sidebar") -%><!--/.sidebar-->
                 </div>
                 <!--/.span3-->
-                
+                <div class="span9">
+                    <div class="content">
+                        <div class="module">
+                            <div class="module-body">
+                                <div class="profile-head media">
+                                    <a href="#" class="media-avatar pull-left">
+                                        <img src="<%= user.imageURL%>">
+                                    </a>
+                                    <div class="media-body">
+                                        <h2>
+                                            <%= user.grupo %><small><%= user.ide %></small>
+                                        </h2>
+                                        <h4 class="profile-details">
+                                            Contacto:
+                                        </h4>
+                                        <div class="profile-details muted">
+                                            <a href="#"  class="btn-box"><i class="icon-group shaded"></i></a><p><%= user.numero %></p>
+                                            <a  href="#" class="btn-box"><i class="icon-envelope-alt shaded"></i></a><p><%= user.correo %></p>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <th>INFORMACIÓN RELACIONADA AL ARTISTA</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Fecha de inicio: <br /></td>
+                                                <td><a class="btn"><%= user.fecha %></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Locación de Grupo musical: <br /></td>
+                                                <td><a class="btn"><%= user.locacion %></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Preferencia en la forma de trabajo: <br /></td>
+                                                <td><a class="btn"><%= user.modo %></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Plataformas Digitales: <br /></td>
+                                                <td>
+                                                    <a class="btn"><%= user.spotify %></a></br>
+                                                    <a class="btn"><%= user.youtube %></a></br>
+                                                    <a class="btn"><%= user.itunes %></a></br>
+                                                    <a class="btn"><%= user.deezer %></a></br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Integrantes: <br /></td>
+                                                <td>
+                                                    <a class="btn"><%= user.name1 %></a></br>
+                                                    <a class="btn"><%= user.name2 %></a></br>
+                                                    <a class="btn"><%= user.name3 %></a></br>
+                                                    <a class="btn"><%= user.name4 %></a></br>
+                                                    <a class="btn"><%= user.name5 %></a></br>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                            <!--/.module-body-->
+                        </div>
+                        <!--/.module-->
+                    </div>
+                    <!--/.content-->
+                </div>
             </div>
         </div>
         <!--/.container-->
@@ -27,6 +110,15 @@
             <b class="copyright">&copy; 2021 ESIME ZACATENCO </b> ICE.
         </div>
     </div>
+    <script>
+       function copytext(){
+           let texto =document.getElementById('textox');
+           texto.select();
+           texto.setSelectionRange(0,99999);
+           document.execCommand('copy');
+       }
+
+    </script>
     <script src="/css/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="/css/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="/css/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

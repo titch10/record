@@ -21,7 +21,7 @@
                         <div class="module">
                             <div class="module-head">
                                 <h3>
-                                    All Members</h3>
+                                    Todos los artistas</h3>
                             </div>
                             <div class="module-option clearfix">
                                 <form>
@@ -34,18 +34,19 @@
                                 </form>
                             </div>
                             <div class="module-body">
+                                <% for (var i=0; i < users.length; i=i+2){ %>
                                 <div class="row-fluid">
                                     <div class="span6">
                                         <div class="media user">
-                                            <a class="media-avatar pull-left" href="#">
-                                                <img src="images/user.png">
+                                            <a class="media-avatar pull-left" href="/users/perfil/<%= users[i].id %>">
+                                                <img src="<%= users[i].imageURL%>" alt="<%= users[i].public_id %>">
                                             </a>
                                             <div class="media-body">
                                                 <h3 class="media-title">
-                                                    Grupo1
+                                                    <%= users[i].grupo %>
                                                 </h3>
                                                 <p>
-                                                    <small class="muted">CDMX</small></p>
+                                                    <small class="muted"><%= users[i].ide %></small></p>
                                                 <div class="media-option btn-group shaded-icon">
                                                     <button class="btn btn-small">
                                                         <i class="icon-envelope"></i>
@@ -57,16 +58,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <% if(users[i+1]!=null){ %>
                                     <div class="span6">
                                         <div class="media user">
-                                            <a class="media-avatar pull-left" href="#">
-                                                <img src="images/user.png">
+                                            <a class="media-avatar pull-left" href="/users/perfil/<%= users[i+1].id %>">
+                                                <img src="<%= users[i+1].imageURL%>" alt="<%= users[i+1].public_id %>">
                                             </a>
                                             <div class="media-body">
                                                 <h3 class="media-title">
-                                                    Grupo2</h3>
+                                                    <%= users[i+1].grupo %>
+                                                </h3>
                                                 <p>
-                                                    <small class="muted">Guatemala</small></p>
+                                                    <small class="muted"><%= users[i+1].ide %></small></p>
                                                 <div class="media-option btn-group shaded-icon">
                                                     <button class="btn btn-small">
                                                         <i class="icon-envelope"></i>
@@ -78,87 +81,16 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <% }else{} %>
                                 </div>
+                                
                                 <!--/.row-fluid-->
                                 <br />
-                                <div class="row-fluid">
-                                    <div class="span6">
-                                        <div class="media user">
-                                            <a class="media-avatar pull-left" href="#">
-                                                <img src="images/user.png">
-                                            </a>
-                                            <div class="media-body">
-                                                <h3 class="media-title">
-                                                    Albert</h3>
-                                                <p>
-                                                    <small class="muted">NY</small></p>
-                                                <div class="media-option btn-group shaded-icon">
-                                                    <button class="btn btn-small">
-                                                        <i class="icon-envelope"></i>
-                                                    </button>
-                                                    <button class="btn btn-small">
-                                                        <i class="icon-share-alt"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="span6">
-                                        <div class="media user">
-                                            <a class="media-avatar pull-left" href="#">
-                                                <img src="images/user.png">
-                                            </a>
-                                            <div class="media-body">
-                                                <h3 class="media-title">
-                                                    Bleib Morden</h3>
-                                                <p>
-                                                    <small class="muted">Brit</small></p>
-                                                <div class="media-option btn-group shaded-icon">
-                                                    <button class="btn btn-small">
-                                                        <i class="icon-envelope"></i>
-                                                    </button>
-                                                    <button class="btn btn-small">
-                                                        <i class="icon-share-alt"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--/.row-fluid-->
-                                <br />
-                                <div class="row-fluid">
-                                    <div class="span6">
-                                        <div class="media user">
-                                            <a class="media-avatar pull-left" href="#">
-                                                <img src="images/user.png">
-                                            </a>
-                                            <div class="media-body">
-                                                <h3 class="media-title">
-                                                    Smoke</h3>
-                                                <p>
-                                                    <small class="muted">Circuit</small></p>
-                                                <div class="media-option btn-group shaded-icon">
-                                                    <button class="btn btn-small">
-                                                        <i class="icon-envelope"></i>
-                                                    </button>
-                                                    <button class="btn btn-small">
-                                                        <i class="icon-share-alt"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!--/.row-fluid-->
-                                <br />
+                                <% } %>
                                 <div class="pagination pagination-centered">
                                     <ul>
                                         <li><a href="#"><i class="icon-double-angle-left"></i></a></li>
                                         <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
                                         <li><a href="#"><i class="icon-double-angle-right"></i></a></li>
                                     </ul>
                                 </div>

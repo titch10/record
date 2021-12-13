@@ -212,7 +212,6 @@ const getMessage= async(req,res)=>{
     if (err) {
         console.log('ha ocurrido un error')
     }else{
-        console.log(result)
         await Msg.countDocuments({},function(err,count){
         res.render('message',{msgs:result,count,aux,msn})
     })
@@ -245,11 +244,15 @@ const getTabla=(req,res)=>{
 const getGraph=(req,res)=>{
     res.render('charts',{msn})
 }
-const getArtistas=(req,res)=>{
-    res.render('other-user-profile',{msn})
+const getPerfil=async(req,res)=>{
+
+    const {id} = req.params;
+    const user = await User.findById(id);
+    res.render('other-user-profile',{user,msn})
 }
-const getPerfil=(req,res)=>{
-    res.render('other-user-listing',{msn})
+const getArtistas= async(req,res)=>{
+    const users = await User.find();
+    res.render('other-user-listing',{users,msn})
 }
 const getIndex=async(req,res)=>{
     try{  
@@ -390,7 +393,7 @@ const createArtist = async(req,res)=>{
 
     await user.save();
     await fs.unlink(req.file.path)
-    res.redirect('/users/form')
+    res.redirect('/users/artistas')
 }
 const subirImagen= async(req,res)=>{
     const {title,descripcion}=req.body;
@@ -403,7 +406,7 @@ const subirImagen= async(req,res)=>{
     })
     await newPhoto.save();
     await fs.unlink(req.file.path)
-    res.send('ok');
+    res.redirect('/users/form');
 }
 const getSendmsg=async(req,res)=>{
     try{
