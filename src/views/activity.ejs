@@ -59,18 +59,12 @@
 								</div>
 
 								<div class="stream-list">
-									<div class="media stream new-update">
-										<a href="#">
-											<i class="icon-refresh shaded"></i>
-											
-										</a>
-									</div>
+									
 
 
 
 
-                                    <% photos.forEach(function (photo) { %>
-                                    
+									<% for (var i=photos.length-1; i > -1; i--){ %>
 
 									<div class="media stream">
 										<a href="#" class="media-avatar medium pull-left">
@@ -79,17 +73,17 @@
 										<div class="media-body">
 											<div class="stream-headline">
 												<h5 class="stream-author">
-													<%= photo.title %>
+													<%= photos[i].title %>
 													<small>08 July, 2014</small>
 												</h5>
 												<div class="stream-text">
-													<%= photo.descripcion %> 
+													<%= photos[i].descripcion %> 
 												</div>
 												<div class="stream-attachment video">
 													<div class="responsive-video">
 														
                                                         
-														<img src="<%= photo.imageURL%>" class="card-img-top" alt="<%= photo.public_id %>">
+														<img src="<%= photos[i].imageURL%>" class="card-img-top" alt="<%= photos[i].public_id %>">
                                                         
 													</div>
 												</div>
@@ -102,13 +96,13 @@
 											<i class="icon-thumbs-up shaded"></i>
 											Like
 										</a>
-										<a href="#" class="btn btn-small">
+										<a href="/users/eliminarNoticia/<%= photos[i]._id %>" class="btn btn-small">
 											<i class="icon-double-angle-left"></i>
 											Delete
 										</a>
 									</div>
 
-									<% }) %>
+									<% } %>
 
 
 

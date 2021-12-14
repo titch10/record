@@ -9,6 +9,8 @@ const bcrypt = require ('bcrypt')
 const nodemailer=require('nodemailer')
 const {google} = require('googleapis')
 const path=require('path')
+var c_spotify;
+var xl=require('excel4node')
 let msn = false;
 let tsk = false;
 var Growth;
@@ -256,11 +258,31 @@ const getArtistas= async(req,res)=>{
 }
 const getIndex=async(req,res)=>{
     try{  
-        await User.countDocuments({}, function (err, count) {
-            //console.log('there are %d users', count);
+            await User.countDocuments({},async function (err, count) {
+
+            var v_spotify = await User.find({
+                spotify: 'Spotify'
+            });
+            var v_youtube = await User.find({
+                youtube: 'Youtube'
+            });
+            var v_itunes = await User.find({
+                itunes: 'Itunes'
+            });
+            var v_deezer = await User.find({
+                deezer: 'Deezer'
+            });
+            c_spotify=(v_spotify.length*100)/count;
+            c_spotify=c_spotify.toFixed(2);
+            c_youtube=(v_youtube.length*100)/count;
+            c_youtube=c_youtube.toFixed(2);
+            c_itunes=(v_itunes.length*100)/count;
+            c_itunes=c_itunes.toFixed(2);
+            c_deezer=(v_deezer.length*100)/count;
+            c_deezer=c_deezer.toFixed(2);
             Growth= (count*100)/metaArtist;
             Growth=Growth.toFixed(2);
-            res.render('index',{count,Growth,msn})
+            res.render('index',{count,Growth,msn,c_spotify,c_youtube,c_itunes,c_deezer})
           });
     }catch(e){
         console.log(e)
@@ -270,6 +292,9 @@ const getUpdateTask=async(req,res)=>{
     const {id} = req.params;
     const task = await Task.findById(id);
     res.render('task-edit',{task,msn});
+}
+const getPerfilR=(req,res)=>{
+    res.render('perfil',{msn})
 }
 
 // FUNCIONES
@@ -406,7 +431,7 @@ const subirImagen= async(req,res)=>{
     })
     await newPhoto.save();
     await fs.unlink(req.file.path)
-    res.redirect('/users/form');
+    res.redirect('/users/tablero');
 }
 const getSendmsg=async(req,res)=>{
     try{
@@ -479,8 +504,74 @@ const updateTask= async(req,res)=>{
    await Task.update({_id:id},req.body);
    res.redirect('/users/tarea')
 }  
+const getExcel= async(req,res)=>{
+    var wb = new xl.Workbook();
+    var ws = wb.addWorksheet('Ventas');
+    var style = wb.createStyle({
+        font:{
+            color:'#040404',
+            size:12,
+        }
+    });
+    var greenS = wb.createStyle({
+        font:{
+            color: '#388813',
+            size: 12,
+        }
+    });
 
-module.exports= {updateTask,getUpdateTask,cambiarBoton,deleteTask,crearTask,getCreateTask,deleteMsg,msgEnvio,getSendmsg,getCount,subirImagen,createArtist,getPerfil,getArtistas,getGraph,getTabla,getForm,getTarea,getMessage,getTablero,getContact,getIndex,getStore,getUser, 
+    ws.cell(1, 1).string("Artista").style(greenS);
+    ws.cell(1, 2).string("Plataforma").style(greenS);
+    ws.cell(1, 3).string("Mes").style(greenS);
+    ws.cell(1, 4).string("Ganancia").style(greenS);
+    ws.cell(1, 5).string("Neto").style(greenS);
+
+    ws.cell(2, 1).string("Alex G").style(style);
+    ws.cell(2, 2).string("Youtube music").style(style);
+    ws.cell(2, 3).string("Abril 19").style(style);
+    ws.cell(2, 4).string("3,219.78").style(style);
+    ws.cell(2, 5).string("2,414.84").style(style);
+    
+
+    ws.cell(3, 1).string("Alex G").style(style);
+    ws.cell(3, 2).string("Spotify Platform").style(style);
+    ws.cell(3, 3).string("Mayo 19").style(style);
+    ws.cell(3, 4).string("3,097.91").style(style);
+    ws.cell(3, 5).string("2,323.43").style(style);
+
+    ws.cell(4, 1).string("Alex G").style(style);
+    ws.cell(4, 2).string("Itunes Apple").style(style);
+    ws.cell(4, 3).string("Junio 19").style(style);
+    ws.cell(4, 4).string("5,168.15").style(style);
+    ws.cell(4, 5).string("3,876.11").style(style);
+
+    ws.column(1).setWidth(15);
+    ws.column(2).setWidth(15);
+    ws.column(3).setWidth(15);
+    ws.column(4).setWidth(15);
+
+    console.log("-> Excel generado!!");
+
+    const pathExcel = path.join(__dirname,'excel','Ventas.xlsx')
+
+    wb.write(pathExcel, function(err,stats){
+        if(err){
+            console.error(err);
+        }else{
+            function downloadFile(){
+                res.download(pathExcel);
+            }
+            downloadFile();
+            return false;
+        }
+    });
+}
+const deleteTablero = async (req,res)=>{
+    const {id}=req.params
+    await Photo.remove({_id:id})
+    res.redirect('/users/tablero')
+}
+module.exports= {getPerfilR,deleteTablero,getExcel,updateTask,getUpdateTask,cambiarBoton,deleteTask,crearTask,getCreateTask,deleteMsg,msgEnvio,getSendmsg,getCount,subirImagen,createArtist,getPerfil,getArtistas,getGraph,getTabla,getForm,getTarea,getMessage,getTablero,getContact,getIndex,getStore,getUser, 
     getCreateUser, getUpdateUser,getUpdateAdmin, getDeleteUser, getDeleteAdmin, 
     createUser, updateUser, updateAdmin, deleteUser, deleteAdmin, getAdmin, login, register, 
     getcreateAdmin, sendSupport}
